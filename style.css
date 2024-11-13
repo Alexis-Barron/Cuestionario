@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #2d2d2d;
+    color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0 10px;
+}
+
+.container {
+    background-color: #333333;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    border: 1px solid #444;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #f0f0f0;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+#question {
+    font-size: 1.25rem;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+#answers button {
+    margin: 12px 0;
+    padding: 12px;
+    background-color: #ff5722; /* Nuevo color naranja */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#answers button:hover {
+    background-color: #e64a19; /* Tono más oscuro de naranja para el hover */
+    transform: translateY(-2px);
+}
+
+#next-button {
+    margin-top: 30px;
+    padding: 12px 25px;
+    background-color: #007BFF; /* Color azul para el botón "Siguiente" */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#next-button:hover {
+    background-color: #0056b3; /* Tono azul más oscuro para el hover */
+    transform: translateY(-2px);
+}
+
+#result {
+    margin-top: 30px;
+    font-size: 1.125rem;
+    color: #f0f0f0;
+    font-weight: 500;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background-color: #444;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.modal-close {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f0f0f0;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.modal-close:hover {
+    color: #f00;
+}
+
+body {
+    padding: 0 10px;
+}
