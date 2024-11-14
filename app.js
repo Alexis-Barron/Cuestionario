@@ -13,19 +13,21 @@ function decodeHtmlEntity(str) {
 
 async function fetchQuestions() {
     try {
-    const response = await fetch('https://opentdb.com/api.php?amount=5&category=21&type=multiple&language=es');
-    const data = await response.json();
-    questions = data.results;
+        const response = await fetch('https://opentdb.com/api.php?amount=5&category=21&type=multiple&language=es');
+        const data = await response.json();
+        questions = data.results;
 
+        // Decodificar las preguntas y respuestas
         questions.forEach(question => {
-        question.question = decodeHtmlEntity(question.question);
-        question.correct_answer = decodeHtmlEntity(question.correct_answer);
-        question.incorrect_answers = question.incorrect_answers.map(decodeHtmlEntity);
-    });
+            question.question = decodeHtmlEntity(question.question);
+            question.correct_answer = decodeHtmlEntity(question.correct_answer);
+            question.incorrect_answers = question.incorrect_answers.map(decodeHtmlEntity);
+        });
 
-    showQuestion(currentQuestion);
+        // Mostrar la primera pregunta
+        showQuestion(currentQuestion);
     } catch (error) {
-    console.error('Error fetching trivia questions:', error);
+        console.error('Error fetching trivia questions:', error);
     }
 }
 
@@ -33,42 +35,54 @@ function showQuestion(index) {
     const question = questions[index];
     const questionText = document.getElementById('question');
     const answersContainer = document.getElementById('answers');
-    const nextButton = document.getElementById('next-button');
 
+    // Mostrar la pregunta
     questionText.textContent = question.question;
     answersContainer.innerHTML = '';
 
+    // Combinar respuestas correctas e incorrectas, y mezclar
     const allAnswers = [...question.incorrect_answers, question.correct_answer];
     shuffleArray(allAnswers);
 
+    // Crear botones de respuestas
     allAnswers.forEach((answer) => {
-    const button = document.createElement('button');
-    button.textContent = answer;
-    button.onclick = () => handleAnswer(answer, question.correct_answer);
-    answersContainer.appendChild(button);
+        const button = document.createElement('button');
+        button.textContent = answer;
+        button.onclick = () => handleAnswer(answer, question.correct_answer);
+        answersContainer.appendChild(button);
     });
-
-  nextButton.style.display = 'none';
 }
 
 function handleAnswer(selectedAnswer, correctAnswer) {
+    // Verificar si la respuesta es correcta y actualizar el puntaje
     if (selectedAnswer === correctAnswer) {
-    score++;
+        score++;
     }
+
+    // Actualizar el puntaje en la interfaz
     document.getElementById('score').textContent = `Puntaje: ${score}`;
-    document.getElementById('next-button').style.display = 'inline-block'; 
+
+    // Pasar automáticamente a la siguiente pregunta
+    setTimeout(() => {
+        nextQuestion();
+    }, 1000);  // Espera 1 segundo antes de pasar a la siguiente pregunta
 }
 
 function nextQuestion() {
     currentQuestion++;
+
+    // Si hay más preguntas, mostrar la siguiente
     if (currentQuestion < questions.length) {
-    showQuestion(currentQuestion);
+        showQuestion(currentQuestion);
     } else {
-    showModal(`¡Juego terminado! Tu puntaje final es: ${score}`);
-    currentQuestion = 0;
-    score = 0;
-    document.getElementById('score').textContent = `Puntaje: ${score}`;
-    showQuestion(currentQuestion);
+        // Si ya no hay preguntas, mostrar el modal con el puntaje final
+        showModal(`¡Juego terminado! Tu puntaje final es: ${score}`);
+
+        // Reiniciar el juego
+        currentQuestion = 0;
+        score = 0;
+        document.getElementById('score').textContent = `Puntaje: ${score}`;
+        showQuestion(currentQuestion);
     }
 }
 
@@ -78,20 +92,21 @@ function showModal(message) {
     const closeModal = document.getElementById('modal-close');
 
     modalMessage.textContent = message;
-    modal.style.display = 'flex';  
+    modal.style.display = 'flex';
 
     closeModal.onclick = () => {
-    modal.style.display = 'none';  
+        modal.style.display = 'none';
     };
 
+    // Cerrar el modal automáticamente después de 3 segundos
     setTimeout(() => {
-    modal.style.display = 'none';
+        modal.style.display = 'none';
     }, 3000);  
 }
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Intercambiar elementos
     }
 }
